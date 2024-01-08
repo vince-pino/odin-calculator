@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple Calculator</title>
+</head>
+<body>
+
+  <input type="text" id="display" readonly>
+  <br>
+
+  <button onclick="appendToDisplay('1')">1</button>
+  <button onclick="appendToDisplay('2')">2</button>
+  <button onclick="appendToDisplay('3')">3</button>
+  <button onclick="appendToDisplay('+')">+</button>
+  <br>
+
+  <button onclick="appendToDisplay('4')">4</button>
+  <button onclick="appendToDisplay('5')">5</button>
+  <button onclick="appendToDisplay('6')">6</button>
+  <button onclick="appendToDisplay('-')">-</button>
+  <br>
+
+  <button onclick="appendToDisplay('7')">7</button>
+  <button onclick="appendToDisplay('8')">8</button>
+  <button onclick="appendToDisplay('9')">9</button>
+  <button onclick="appendToDisplay('*')">*</button>
+  <br>
+
+  <button onclick="appendToDisplay('0')">0</button>
+  <button onclick="clearDisplay()">C</button>
+  <button onclick="calculate()">=</button>
+  <button onclick="appendToDisplay('/')">/</button>
+  <br>
+
+  <script>
+    function appendToDisplay(value) {
+      document.getElementById('display').value += value;
+    }
+
+    function clearDisplay() {
+      document.getElementById('display').value = '';
+    }
+
+    function calculate() {
+      let expression = document.getElementById('display').value;
+      let result = evalExpression(expression);
+      document.getElementById('display').value = result;
+    }
+
+    function evalExpression(expression) {
+      let operators = expression.match(/[\+\-\*\/]/g);
+      let numbers = expression.split(/[\+\-\*\/]/).map(Number);
+
+      while (operators && operators.length > 0) {
+        let operatorIndex = expression.indexOf(operators[0]);
+        let num1 = numbers[operatorIndex];
+        let num2 = numbers[operatorIndex + 1];
+
+        switch (operators[0]) {
+          case '+':
+            numbers.splice(operatorIndex, 2, num1 + num2);
+            break;
+          case '-':
+            numbers.splice(operatorIndex, 2, num1 - num2);
+            break;
+          case '*':
+            numbers.splice(operatorIndex, 2, num1 * num2);
+            break;
+          case '/':
+            if (num2 === 0) {
+              return 'Cannot divide by zero';
+            } else {
+              numbers.splice(operatorIndex, 2, num1 / num2);
+            }
+            break;
+          default:
+            return 'Invalid operation';
+        }
+
+        operators.shift();
+      }
+
+      if (numbers.length === 1) {
+        return numbers[0];
+      } else {
+        return 'Invalid expression';
+      }
+    }
+  </script>
+
+</body>
+</html>
