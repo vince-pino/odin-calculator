@@ -9,7 +9,7 @@ export function evaluate(expression) {
   let currentNumber = "";
   for (let i = 0; i < expression.length; i++) {
     const char = expression[i];
-    if (parseFloat(char) || char === '.') {
+    if (!isNaN(parseFloat(char)) || char === '.') {
       currentNumber += char;
     }
     else {

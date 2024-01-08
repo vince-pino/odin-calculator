@@ -17,7 +17,6 @@ function handleClicks(e) {
     const result = evaluate(displayValue);
     displayValue = result.toString();
     display.textContent = displayValue;
-    console.log(result);
   }
   else if (value === 'clear') {
     displayValue = '';
@@ -25,7 +24,6 @@ function handleClicks(e) {
   }
   else if (value === 'del') {
     displayValue = del(displayValue);
-    console.log(displayValue);
     display.textContent = displayValue;
   }
   else {
